@@ -1,0 +1,83 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="jyj-nav">
+            <div class="nav_row">
+                <div class="nav_icon">
+                    <a class="box_center" href="#/login">
+                        <span class="icon_logo"></span>
+                        <h1 id="bb">优e品</h1>
+                    </a>
+                </div>
+                <ul class="nav nav-pills nav-stacked">
+                    <li role="presentation"><a href="#/app/dishes">菜品映射</a></li>
+                    <li role="presentation"><a href="#/app/pay">支付方式映射</a></li>
+                    <li role="presentation"><a href="#/app">就餐方式映射</a></li>
+                    <li role="presentation"><a href="#/app">订单详情同步</a></li>
+                    <li role="presentation"><a href="#/app">基本设置</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="jyj_connet">
+            <ui-view></ui-view>
+        </div>
+    </div>
+</div>
+<style>
+    .jyj-nav {
+        position: absolute;
+        width: 150px;
+        height: 100%;
+        top: 0;
+        bottom: 0;
+        padding: 10px;
+        overflow: hidden;
+        font-family: "Microsoft YaHei";
+        /*font-size: 12px;*/
+        background: #2a3542;
+        color: #999;
+        /*display: none;*/
+    }
+
+    .nav_row a {
+        color: #999;
+    }
+
+    .nav_row a:hover {
+        color: #fff;
+    }
+
+    .nav_icon {
+        position: relative;
+        width: 100%;
+        height: 105px;
+    }
+
+    .nav_icon > a {
+        width: 58px;
+        height: 78px;
+    }
+
+    .nav_icon > a > .icon_logo {
+        display: block;
+        border-radius: 50%;
+        width: 58px;
+        height: 58px;
+        background: #fff url("../content/images/logo.png") no-repeat 0 3px;
+    }
+
+    .nav_icon > a > h1 {
+        text-align: center;
+        color: #fff;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 30px;
+    }
+
+    .jyj_connet {
+        margin: 10px 10px 10px 160px;
+        background: #fff;
+        color: #000;
+        border-radius: 6px;
+        padding: 10px;
+    }
+</style>

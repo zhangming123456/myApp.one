@@ -1,0 +1,107 @@
+<div id="login">
+    <header class="login_header">
+        <h1>优e点-吉野家对接平台</h1>
+    </header>
+    <section class="login_box">
+        <div class="login_icon">
+            <span class="login_icon_img"></span>
+            <span class="login_icon_gradual"></span>
+        </div>
+        <form class="form-horizontal showcase-form " role="form" id="basic_form" name="basic_form" novalidate="">
+            <div class="form-group">
+                <div>
+                    <input type="text" required="" ng-pattern="/^[A-Za-z]{1}[0-9A-Za-z_]{2,29}$/" name="user_name" ng-model="vm.user.name" class="form-control" placeholder="由字母、数字、下划线组成，以字母开头，3-30个字符">
+                </div>
+            </div>
+            <div class="form-group">
+                <div>
+                    <input type="password" name="user_password" ng-model="vm.user.password"
+                           required="" ng-maxlength="20" ng-minlength="6" class="form-control"
+                           placeholder="6-20个字符">
+                </div>
+            </div>
+            <div class="form-group" ng-show="basic_form.$invalid && (basic_form.$dirty || vm.show_type == 3) && vm.show_error">
+                <div class="">
+                    <div class="alert alert-danger" style="margin-bottom: 0px">
+                        <ul>
+                            <li ng-show="(basic_form.user_name.$dirty || vm.show_type == 3) && basic_form.user_name.$error.required">用户名不能为空！</li>
+                            <li ng-show="(basic_form.user_name.$dirty || vm.show_type == 3) && basic_form.user_name.$error.pattern">用户名格式不正确！</li>
+                            <li ng-show="(basic_form.user_password.$dirty || vm.show_type == 3) && basic_form.user_password.$error.required">密码不能为空！</li>
+                            <li ng-show="(basic_form.user_password.$dirty || vm.show_type == 3) && basic_form.user_password.$error.maxlength">密码长度不能大于20个字符！</li>
+                            <li ng-show="(basic_form.user_password.$dirty || vm.show_type == 3) && basic_form.user_password.$error.minlength">密码长度不能小于6个字符！</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div>
+                    <button type="submit" ng-click="vm.submit(basic_form)" class="btn btn-success form-control" ng-disabled="basic_form.$invalid && vm.show_type != 3">
+                        提交
+                    </button>
+                </div>
+            </div>
+        </form>
+    </section>
+    <footer>
+        <p>Copyright © 2016-2017 Shenzhen Hanfeng E-commerce Co.,Ltd </p>
+        <p>深圳市汉锋电子商务有限公司 版权所有</p>
+    </footer>
+</div>
+
+<style>
+    #login {
+        margin: 100px auto;
+        width: 450px;
+    }
+
+    .login_header h1 {
+        text-align: center;
+        background: url("../../content/images/logo.png") no-repeat 34px 3px;
+        color: #666;
+        font-size: 28px;
+        height: 58px;
+        line-height: 58px;
+    }
+    .login_box {
+        margin: 50px 0;
+        padding: 50px 50px;
+        background: #fff;
+        border-radius: 10px;
+    }
+
+    .login_icon {
+        position: relative;
+    }
+
+    .login_icon_img {
+        display: block;
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        background-color: #fff;
+        background-image: url(../../content/images/logo-default.png);
+        background-repeat: no-repeat;
+        background-position: 21px 50%;
+        margin: auto;
+        border: 1px solid #ddd;
+        z-index: 1;
+    }
+
+    .form-horizontal {
+        padding-top: 20px;
+    }
+    .showcase-form textarea .ng-dirty.ng-invalid,
+    .showcase-form select .ng-dirty.ng-invalid,
+    .showcase-form input.ng-dirty.ng-invalid {
+        border-color: #e9322d;
+        -webkit-box-shadow: 0 0 6px #f8b9b7;
+        -moz-box-shadow: 0 0 6px #f8b9b7;
+        box-shadow: 0 0 6px #f8b9b7;
+    }
+    #login footer p {
+        text-align: center;
+        line-height: 30px;
+        color: #999;
+    }
+</style>
