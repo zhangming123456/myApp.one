@@ -32,14 +32,18 @@
         height: 14px;
     }
 
+    .dishesList {
+        /*min-width: 1200px;*/
+    }
+
     .dis_radio label span {
         vertical-align: bottom;
         letter-spacing: 10px;
     }
 
     .dishesList .table {
-        display: inline-block;
-        width: auto;
+        /*display: inline-block;*/
+        /*width: auto;*/
     }
 
     .dishesList .table .yep_icon {
@@ -57,7 +61,6 @@
 
     .dishesList .table input {
         text-align: center;
-        width: 110px;
         border-color: rgba(0, 0, 0, 0);
         color: #ccc;
     }
@@ -67,61 +70,93 @@
     }
 </style>
 
-<div>
-    <div id="dishes" ng-class="">
-        <ol class="breadcrumb">
-            <li>吉野家对接</li>
-            <li>{{typeName}}</li>
-        </ol>
-        <!--菜品类型-->
-        <div class="btn-group dis_radio">
-            菜品类型&nbsp;&nbsp;
-            <label ng-repeat="value in vm.values">
-                <input type="radio" name="myTestRadio" ng-model="vm.selection"
-                       ng-value="value" ng-checked="vm.selection.code == value.code"/><span>{{value.name}}</span>&nbsp;&nbsp;
-            </label>
-        </div>
-        <div class="dishesList">
-            <table class="table table-bordered table-hover">
-                <thead>
-                <tr>
-                    <th class="yep_icon" colspan="{{table.length}}">优e品</th>
-                </tr>
-                <tr>
-                    <th ng-repeat="item in table">{{item}}</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <th ng-repeat="item in table">
-                        <input type="text" ng-model="search[$index]" ng-focus="searchSever($index)"/>
-                    </th>
-                </tr>
-                <tr ng-repeat="item in data">
-                    <th ng-repeat="val in item">{{val}}</th>
-                </tr>
-                </tbody>
-            </table>
-            <table class="table table-bordered table-hover">
-                <thead>
-                <tr>
-                    <th class="yep_icon" colspan="{{table.length}}">优e品</th>
-                </tr>
-                <tr>
-                    <th ng-repeat="item in table">{{item}}</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <th ng-repeat="item in table">
-                        <input type="text" ng-model="search[$index]" ng-focus="searchSever($index)">
-                    </th>
-                </tr>
-                <tr ng-repeat="item in data">
-                    <th ng-repeat="val in item">{{val}}</th>
-                </tr>
-                </tbody>
-            </table>
-        </div>
+
+<div id="dishes">
+    <ol class="breadcrumb">
+        <li>吉野家对接</li>
+        <li>{{typeName}}</li>
+    </ol>
+    <!--菜品类型-->
+    <div class="btn-group dis_radio">
+        菜品类型&nbsp;&nbsp;
+        <label ng-repeat="value in vm.values">
+            <input type="radio" name="myTestRadio" ng-model="vm.selection"
+                   ng-value="value" ng-checked="vm.selection.code == value.code"/><span>{{value.name}}</span>&nbsp;&nbsp;
+        </label>
+    </div>
+    <div class="dishesList">
+        <table class="table table-bordered table-hover">
+            <thead>
+            <tr>
+                <th class="yep_icon" colspan="{{table.length}}">优e品</th>
+                <th class="yep_icon" colspan="{{table.length}}">吉野家</th>
+                <th class="yep_icon">操作</th>
+            </tr>
+            <tr>
+                <th ng-repeat="item in table">{{item}}</th>
+                <th ng-repeat="item in table">{{item}}</th>
+                <th>
+                    <buttom>aaa</buttom>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th ng-repeat="item in table">
+                    <input type="text" class="form-control" placeholder="{{searchVal}}" aria-describedby="basic-addon1"
+                           ng-model="search[$index]" ng-focus="searchSever($index)"/>
+                </th>
+                <th ng-repeat="item in table">
+                    <input type="text" class="form-control" placeholder="{{searchVal}}" aria-describedby="basic-addon1"
+                           ng-model="search[$index]" ng-focus="searchSever($index)"/>
+                </th>
+            </tr>
+            <tr ng-repeat="item in data">
+                <th ng-repeat="val in item">{{val}}</th>
+                <th ng-repeat="val in item">{{val}}</th>
+            </tr>
+            </tbody>
+        </table>
+        <!--<table class="table table-bordered table-hover">-->
+        <!--<thead>-->
+        <!--<tr>-->
+        <!--<th class="yep_icon" colspan="{{table.length}}">优e品</th>-->
+        <!--</tr>-->
+        <!--<tr>-->
+        <!--<th ng-repeat="item in table">{{item}}</th>-->
+        <!--</tr>-->
+        <!--</thead>-->
+        <!--<tbody>-->
+        <!--<tr>-->
+        <!--<th ng-repeat="item in table">-->
+        <!--<input type="text" ng-model="search[$index]" ng-focus="searchSever($index)">-->
+        <!--</th>-->
+        <!--</tr>-->
+        <!--<tr ng-repeat="item in data">-->
+        <!--<th ng-repeat="val in item">{{val}}</th>-->
+        <!--</tr>-->
+        <!--</tbody>-->
+        <!--</table>-->
+        <!--<table class="table table-bordered table-hover">-->
+        <!--<thead>-->
+        <!--<tr>-->
+        <!--<th class="yep_icon" colspan="{{table.length}}">优e品</th>-->
+        <!--</tr>-->
+        <!--<tr>-->
+        <!--<th ng-repeat="item in table">{{item}}</th>-->
+        <!--</tr>-->
+        <!--</thead>-->
+        <!--<tbody>-->
+        <!--<tr>-->
+        <!--<th ng-repeat="item in table">-->
+        <!--<input type="text" ng-model="search[$index]" ng-focus="searchSever($index)">-->
+        <!--</th>-->
+        <!--</tr>-->
+        <!--<tr ng-repeat="item in data">-->
+        <!--<th ng-repeat="val in item">{{val}}</th>-->
+        <!--</tr>-->
+        <!--</tbody>-->
+        <!--</table>-->
     </div>
 </div>
+

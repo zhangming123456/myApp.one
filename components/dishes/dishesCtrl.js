@@ -3,9 +3,6 @@
         .controller('dishesCtrl', ['$scope', '$stateParams', '$location', '$http', function ($scope, $stateParams, $location, $http) {
             $scope.searchVal = '请输入';
             $scope.search = [];
-            for (var i = 0; i < 3; i++) {
-                $scope.search[i] = $scope.searchVal;
-            }
             $scope.searchSever = function (val) {
                 console.log(val);
             };
