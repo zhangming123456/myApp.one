@@ -50,8 +50,13 @@
         width: 90px;
     }
 
+    .dishesList .table tr th:nth-last-child(1) {
+        min-width: 200px;
+    }
+
     .dishesList .table tr th {
         min-width: 90px;
+        vertical-align: text-bottom;
     }
 
     .dishesList .table .dis_search input {
@@ -61,6 +66,14 @@
     .dishesList .table .yep_icon {
         color: #FF9900;
         font-weight: bold;
+    }
+
+    .dishesList .table .yep_icon:nth-child(2) {
+        color: #1eff3e;
+    }
+
+    .dishesList .table .yep_icon:nth-child(3) {
+        color: #ff4157;
     }
 
     .dishesList .table th {
@@ -133,10 +146,11 @@
             <tr ng-repeat="item in result.data | filter : search.model">
                 <th>{{item.DishId}}</th>
                 <th>{{item.DishName}}</th>
-                <th ng-if="item.DishSerial">{{item.DishSerial}}</th>
-                <th>{{item.PosMenuId}}</th>
-                <th>{{item.PosEatInPrice}}</th>
-                <th>{{item.PosTakeAwayPrice}}</th>
+                <th ng-if="isSingleProduct">{{item.DishSerial}}</th>
+                <th>{{item.PosMenuId==0?null:item.PosMenuId}}</th>
+                <th>{{item.PosMenuId==0?null:item.PosMenuName}}</th>
+                <th>{{item.PosMenuId==0?null:item.PosMenuName}}</th>
+                <th>{{item.PosMenuId==0?null:item.PosTakeAwayPrice}}</th>
                 <th>
                     <div class="btn-group" role="group">
                         <button type="button" class="btn btn-default" ng-repeat="item2 in ['映射','修改','解除']"
@@ -149,3 +163,4 @@
         </table>
     </div>
 </div>
+<div ng-bind-html="modal.text"></div>

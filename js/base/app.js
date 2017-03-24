@@ -1,8 +1,9 @@
-
 (function (angular) {
     var myapp = angular.module('app', [
         'ui.router',
         'ngResource',
+        'ngSanitize',
+        'ngAnimate',
         'filterServer',
         'myApp.routing',
         'myApp.dishes',
@@ -12,7 +13,7 @@
     myapp.controller('appCtrl', ['$scope', function ($scope) {
         $scope.isLogo = true;
     }]);
-    myapp.run(['$rootScope', '$state', '$stateParams', '$location','$http', function ($rootScope, $state, $stateParams, $location,$http) {
+    myapp.run(['$rootScope', '$state', '$stateParams', '$location', '$http', function ($rootScope, $state, $stateParams, $location, $http) {
             $rootScope.$state = $state;
             $rootScope.$stateParams = $stateParams;
             $rootScope.$on('$locationChangeSuccess', function (a, b, c, d, e) {

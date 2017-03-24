@@ -1,8 +1,9 @@
 (function (angular) {
     angular.module('myApp.dishes', [])
-        .controller('dishesCtrl', ['$scope', '$stateParams', '$location', '$http', '$filter', function ($scope, $stateParams, $location, $http, $filter) {
+        .controller('dishesCtrl', ['$scope', '$stateParams', '$location', '$http', '$filter', '$document', function ($scope, $stateParams, $location, $http, $filter, $document) {
             $scope.typeName = '菜品映射';
             var dis_id = $scope.dis_id = $stateParams.dishesID;
+            $scope.isSingleProduct = dis_id == 0 ? true : false;
             if ($scope.index > 1 || $scope.index < 0) {
                 $location.path('/app').replace();
             }
@@ -245,6 +246,15 @@
             };
             var result = $scope.result = {};
             result.data = resultAjax.Data;
+
+            $scope.modal = {
+                title: '标题',
+                msg: 'Hello,这是一个由Bootstrap提供的模态框.'
+            };
+            var modal = $scope.modal = {
+                text: "<h1>12</h1>"
+            };
+
             // $http
             //     .get(select.values[$scope.index].url)
             //     .then(

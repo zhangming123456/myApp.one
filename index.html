@@ -5,16 +5,19 @@
     <title>Title</title>
     <link rel="stylesheet" href="lib/bootstrap-3.3.5-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="content/css/reset.css">
+    <link rel="stylesheet" href="./node_modules/angular-ui-bootstrap/dist/ui-bootstrap-csp.css">
 </head>
 <body>
 <div ng-app="app">
     <ui-view></ui-view>
 </div>
 <script src="lib/angular/angular.js"></script>
-<!--<script src="lib/angular-1.2.32/angular.min.js"></script>-->
 <script src="lib/angular-ui/angular-ui-router.js"></script>
 <script src="lib/angular/angular-resource.min.js"></script>
+<script src="lib/angular/angular-sanitize.min.js"></script>
 <script src="lib/oclazyload/ocLazyLoad.js"></script>
+<script src="lib/angular/angular-animate.min.js"></script>
+<script src="components/boostrapModal/modal.js"></script>
 <!-- build:js main.min.js-->
 <!--入口文件-->
 <script src="./js/base/app.js"></script>
