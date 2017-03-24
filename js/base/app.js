@@ -1,12 +1,13 @@
+
 (function (angular) {
     var myapp = angular.module('app', [
         'ui.router',
         'ngResource',
-        'oc.lazyLoad',
+        'filterServer',
         'myApp.routing',
         'myApp.dishes',
         'myApp.pay',
-        'myApp.login'
+        'myApp.login',
     ]);
     myapp.controller('appCtrl', ['$scope', function ($scope) {
         $scope.isLogo = true;

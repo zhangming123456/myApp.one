@@ -46,6 +46,18 @@
         /*width: auto;*/
     }
 
+    .dishesList .table tr .dis_tabel_search0 {
+        width: 90px;
+    }
+
+    .dishesList .table tr th {
+        min-width: 90px;
+    }
+
+    .dishesList .table .dis_search input {
+        min-width: 70px;
+    }
+
     .dishesList .table .yep_icon {
         color: #FF9900;
         font-weight: bold;
@@ -78,85 +90,62 @@
     </ol>
     <!--菜品类型-->
     <div class="btn-group dis_radio">
-        菜品类型&nbsp;&nbsp;
-        <label ng-repeat="value in vm.values">
-            <input type="radio" name="myTestRadio" ng-model="vm.selection"
-                   ng-value="value" ng-checked="vm.selection.code == value.code"/><span>{{value.name}}</span>&nbsp;&nbsp;
+        菜品类型
+        &nbsp;&nbsp;
+        <label ng-repeat="value in select.values">
+            <input type="radio" name="myTestRadio" ng-model="select.selection"
+                   ng-value="value" ng-checked="select.selection.code == value.code"/><span>{{value.name}}</span>
         </label>
+        &nbsp;&nbsp;
     </div>
+    <div ng-bind-html="box"></div>
     <div class="dishesList">
         <table class="table table-bordered table-hover">
+            <!--表头-->
             <thead>
             <tr>
-                <th class="yep_icon" colspan="{{table.length}}">优e品</th>
-                <th class="yep_icon" colspan="{{table.length}}">吉野家</th>
+                <th class="yep_icon" ng-repeat="val in table_thead.list" colspan="{{val.colspanNum}}">
+                    {{val.name}}
+                </th>
                 <th class="yep_icon">操作</th>
             </tr>
             <tr>
-                <th ng-repeat="item in table">{{item}}</th>
-                <th ng-repeat="item in table">{{item}}</th>
-                <th>
-                    <buttom>aaa</buttom>
+                <th ng-class="'dis_tabel_search'+$index" ng-repeat="val in table_thead.list[0].dataList">
+                    {{val}}
                 </th>
+                <th ng-class="'dis_tabel_search'+$index" ng-repeat="val in table_thead.list[1].dataList">
+                    {{val}}
+                </th>
+                <th>-</th>
             </tr>
             </thead>
             <tbody>
+            <!--搜索-->
             <tr>
-                <th ng-repeat="item in table">
-                    <input type="text" class="form-control" placeholder="{{searchVal}}" aria-describedby="basic-addon1"
-                           ng-model="search[$index]" ng-focus="searchSever($index)"/>
+            <tr>
+                <th ng-class="'dis_tabel_search'+$index" ng-repeat="(key,val) in search.list">
+                    <input ng-model="search.model[key]" ng-if="isSeachIndex($index)" type="text" class="form-control"
+                           placeholder="{{search.val}}"/>
+                    <span ng-if="!isSeachIndex($index)">-</span>
                 </th>
-                <th ng-repeat="item in table">
-                    <input type="text" class="form-control" placeholder="{{searchVal}}" aria-describedby="basic-addon1"
-                           ng-model="search[$index]" ng-focus="searchSever($index)"/>
-                </th>
+                <th>-</th>
             </tr>
-            <tr ng-repeat="item in data">
-                <th ng-repeat="val in item">{{val}}</th>
-                <th ng-repeat="val in item">{{val}}</th>
+            <tr ng-repeat="item in result.data | filter : search.model">
+                <th>{{item.DishId}}</th>
+                <th>{{item.DishName}}</th>
+                <th ng-if="item.DishSerial">{{item.DishSerial}}</th>
+                <th>{{item.PosMenuId}}</th>
+                <th>{{item.PosEatInPrice}}</th>
+                <th>{{item.PosTakeAwayPrice}}</th>
+                <th>
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-default" ng-repeat="item2 in ['映射','修改','解除']"
+                                ng-click="isDis_operating($index,item.id)">{{item2}}
+                        </button>
+                    </div>
+                </th>
             </tr>
             </tbody>
         </table>
-        <!--<table class="table table-bordered table-hover">-->
-        <!--<thead>-->
-        <!--<tr>-->
-        <!--<th class="yep_icon" colspan="{{table.length}}">优e品</th>-->
-        <!--</tr>-->
-        <!--<tr>-->
-        <!--<th ng-repeat="item in table">{{item}}</th>-->
-        <!--</tr>-->
-        <!--</thead>-->
-        <!--<tbody>-->
-        <!--<tr>-->
-        <!--<th ng-repeat="item in table">-->
-        <!--<input type="text" ng-model="search[$index]" ng-focus="searchSever($index)">-->
-        <!--</th>-->
-        <!--</tr>-->
-        <!--<tr ng-repeat="item in data">-->
-        <!--<th ng-repeat="val in item">{{val}}</th>-->
-        <!--</tr>-->
-        <!--</tbody>-->
-        <!--</table>-->
-        <!--<table class="table table-bordered table-hover">-->
-        <!--<thead>-->
-        <!--<tr>-->
-        <!--<th class="yep_icon" colspan="{{table.length}}">优e品</th>-->
-        <!--</tr>-->
-        <!--<tr>-->
-        <!--<th ng-repeat="item in table">{{item}}</th>-->
-        <!--</tr>-->
-        <!--</thead>-->
-        <!--<tbody>-->
-        <!--<tr>-->
-        <!--<th ng-repeat="item in table">-->
-        <!--<input type="text" ng-model="search[$index]" ng-focus="searchSever($index)">-->
-        <!--</th>-->
-        <!--</tr>-->
-        <!--<tr ng-repeat="item in data">-->
-        <!--<th ng-repeat="val in item">{{val}}</th>-->
-        <!--</tr>-->
-        <!--</tbody>-->
-        <!--</table>-->
     </div>
 </div>
-
