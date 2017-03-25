@@ -5,6 +5,8 @@
         'ngSanitize',
         'ngAnimate',
         'filterServer',
+        "jsonToStr.server",
+        "http.Server",
         'myApp.routing',
         'myApp.dishes',
         'myApp.pay',
@@ -14,6 +16,7 @@
         $scope.isLogo = true;
     }]);
     myapp.run(['$rootScope', '$state', '$stateParams', '$location', '$http', function ($rootScope, $state, $stateParams, $location, $http) {
+            $rootScope.httpIp = "http://192.168.4.201:8022";
             $rootScope.$state = $state;
             $rootScope.$stateParams = $stateParams;
             $rootScope.$on('$locationChangeSuccess', function (a, b, c, d, e) {

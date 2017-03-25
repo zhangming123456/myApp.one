@@ -95,7 +95,9 @@
     }
 </style>
 
-
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" ng-click="modal.open()">
+    Launch demo modal
+</button>
 <div id="dishes">
     <ol class="breadcrumb">
         <li>吉野家对接</li>
@@ -137,24 +139,24 @@
             <tr>
             <tr>
                 <th ng-class="'dis_tabel_search'+$index" ng-repeat="(key,val) in search.list">
-                    <input ng-model="search.model[key]" ng-if="isSeachIndex($index)" type="text" class="form-control"
+                    <input ng-model="search.model[key]" ng-if="isSeachIndex($index,4)" type="text" class="form-control"
                            placeholder="{{search.val}}"/>
-                    <span ng-if="!isSeachIndex($index)">-</span>
+                    <span ng-if="!isSeachIndex($index,4)">-</span>
                 </th>
                 <th>-</th>
             </tr>
-            <tr ng-repeat="item in result.data | filter : search.model">
+            <tr ng-repeat="item in result.resultData.Data | filter : search.model">
                 <th>{{item.DishId}}</th>
                 <th>{{item.DishName}}</th>
                 <th ng-if="isSingleProduct">{{item.DishSerial}}</th>
                 <th>{{item.PosMenuId==0?null:item.PosMenuId}}</th>
                 <th>{{item.PosMenuId==0?null:item.PosMenuName}}</th>
-                <th>{{item.PosMenuId==0?null:item.PosMenuName}}</th>
-                <th>{{item.PosMenuId==0?null:item.PosTakeAwayPrice}}</th>
+                <th>{{item.PosMenuId==0?null:("¥"+item.PosEatInPrice)}}</th>
+                <th>{{item.PosMenuId==0?null:"¥"+item.PosTakeAwayPrice}}</th>
                 <th>
                     <div class="btn-group" role="group">
                         <button type="button" class="btn btn-default" ng-repeat="item2 in ['映射','修改','解除']"
-                                ng-click="isDis_operating($index,item.id)">{{item2}}
+                                ng-click="OpenModal($index,item.DishUnitId)">{{item2}}
                         </button>
                     </div>
                 </th>
@@ -163,4 +165,60 @@
         </table>
     </div>
 </div>
-<div ng-bind-html="modal.text"></div>
+<!-- Button trigger modal -->
+
+<!-- Modal -->
+<div id="dis_modal">
+    <div ng-show="modal.isOpenModal_show" class="modal fade" ng-class="{'in' : modal.isOpenModal}" tabindex="-1"
+         role="dialog" aria-labelledby="myModalLabel" style="display: block" ng-click="modal.stop()">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" ng-click="modal.stopEvent($event)">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" ng-click="modal.stop()"><span
+                            aria-hidden="true">&times;</span>
+                    </button>
+                    <!--标题-->
+                    <h4 class="modal-title" id="myModalLabel" ng-bind="modal.tilte"></h4>
+                </div>
+                <div class="modal-body">
+                    <!--表格-->
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th ng-repeat="val in table_thead.list[1].dataList">
+                                {{val}}
+                            </th>
+                        </tr>
+                        <tr>
+                            <th></th>
+                            <th ng-repeat="(key,val) in table_thead.list[1].dataList">
+                                <input ng-model="modelsearchs[key]" ng-if="isSeachIndex($index,1)" type="text"
+                                       class="form-control" placeholder="{{search.val}}"/>
+                                <span ng-if="!isSeachIndex($index,1)">-</span>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="item in modal.modalDataAjax">
+                            <th>
+                                <input type="radio" name="myTestRadio" ng-model="modalRadio.selection" ng-value="modalRadio.value"
+                                       ng-checked="modalRadio.selection.code == modalRadio.code"/>
+                                <input type="radio" name="myTestRadio2" ng-model="modalRadio2.selection" ng-value="modalRadio2.value"
+                                       ng-checked="modalRadio2.selection.code == modalRadio2.code"/>
+                            </th>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="modal.stop()">取消
+                    </button>
+                    <button type="button" class="btn btn-primary" ng-click="">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-backdrop fade" ng-show="modal.isOpenModal_show" ng-class="{'in' : modal.isOpenModal}"
+         ng-click="modal.stop()"></div>
+</div>

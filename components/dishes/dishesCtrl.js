@@ -1,6 +1,6 @@
 (function (angular) {
     angular.module('myApp.dishes', [])
-        .controller('dishesCtrl', ['$scope', '$stateParams', '$location', '$http', '$filter', '$document', function ($scope, $stateParams, $location, $http, $filter, $document) {
+        .controller('dishesCtrl', ['$scope', '$stateParams', '$location', '$http', '$filter', '$document', '$rootScope', 'httpServer', function ($scope, $stateParams, $location, $http, $filter, $document, $rootScope, httpServer) {
             $scope.typeName = '菜品映射';
             var dis_id = $scope.dis_id = $stateParams.dishesID;
             $scope.isSingleProduct = dis_id == 0 ? true : false;
@@ -10,8 +10,16 @@
             // 选择
             var select = $scope.select = {};
             select.values = [
-                {code: 'a', name: "单品", url: ''},
-                {code: 'b', name: "套餐", url: ''}
+                {
+                    code: 'a', name: "单品", url: $rootScope.httpIp + '/Dish/SingleList',
+                    getUrl: $rootScope.httpIp + "/Dish/GetPosDishList"
+                },
+                {
+                    code: 'b',
+                    name: "套餐",
+                    url: $rootScope.httpIp + '/Dish/PackageList',
+                    getUrl: $rootScope.httpIp + "/Dish/GetPosDishPackList"
+                }
             ];
 
             select.selection = select.values[dis_id];
@@ -60,211 +68,135 @@
                 delete table_thead.list[0].dataList.DishSerial;
                 table_thead.list[0].colspanNum = 2;
             }
+            var clearData = function (obj) {
+                for (var key in obj) {
+                    if (obj[key].length <= 0) {
+                        delete obj[key]
+                    }
+                }
+            };
             //搜索栏
             var search = $scope.search = {};
             search.list = {};
             search.val = '请输入';
             search.model = {};
             $scope.$watch('search', function (a, b) {
-                for (var key in a.model) {
-                    if (a.model[key].length <= 0) {
-                        delete a.model[key]
-                    }
-                }
+                clearData(a.model);
             }, true);
             angular.extend(search.list, table_thead.list[0].dataList, table_thead.list[1].dataList);
-            $scope.isSeachIndex = function (e) {
-                return e <= 4
+            $scope.isSeachIndex = function (e, n) {
+                return e <= n
             };
             //返回数据
-            var resultAjax = {
-                "Status": 1,
-                "Error": null,
-                "Data": [
-                    {
-                        "DishMenuId": 2,
-                        "DishId": 152,
-                        "DishName": "菜品2",
-                        "DishSerial": "2",
-                        "UnitId": 152,
-                        "UnitName": "单位2",
-                        "PosMenuId": 22,
-                        "PosMenuName": "菜品22",
-                        "PosMenuNumber": 22,
-                        "YedIsPackage": 0,
-                        "DishPrice": "22.00",
-                        "PosEatInPrice": "22.00",
-                        "PosTakeAwayPrice": "23.00",
-                        "DishSubList": null
-                    },
-                    {
-                        "DishMenuId": 0,
-                        "DishId": 152,
-                        "DishName": "寺",
-                        "DishSerial": "15624",
-                        "UnitId": 9,
-                        "UnitName": "碟",
-                        "PosMenuId": 0,
-                        "PosMenuName": null,
-                        "PosMenuNumber": 0,
-                        "YedIsPackage": 0,
-                        "DishPrice": "0.00",
-                        "PosEatInPrice": "0.00",
-                        "PosTakeAwayPrice": "0.00",
-                        "DishSubList": null
-                    },
-                    {
-                        "DishMenuId": 0,
-                        "DishId": 149,
-                        "DishName": "fdsfsdf",
-                        "DishSerial": "65985",
-                        "UnitId": 152,
-                        "UnitName": "个",
-                        "PosMenuId": 0,
-                        "PosMenuName": null,
-                        "PosMenuNumber": 0,
-                        "YedIsPackage": 0,
-                        "DishPrice": "0.00",
-                        "PosEatInPrice": "0.00",
-                        "PosTakeAwayPrice": "0.00",
-                        "DishSubList": null
-                    },
-                    {
-                        "DishMenuId": 0,
-                        "DishId": 145,
-                        "DishName": "打包盒（大的）都有",
-                        "DishSerial": "99122",
-                        "UnitId": 152,
-                        "UnitName": "个",
-                        "PosMenuId": 0,
-                        "PosMenuName": null,
-                        "PosMenuNumber": 0,
-                        "YedIsPackage": 0,
-                        "DishPrice": "0.00",
-                        "PosEatInPrice": "0.00",
-                        "PosTakeAwayPrice": "0.00",
-                        "DishSubList": null
-                    },
-                    {
-                        "DishMenuId": 0,
-                        "DishId": 144,
-                        "DishName": "打包盒（小盒子）只有外卖",
-                        "DishSerial": "21123",
-                        "UnitId": 152,
-                        "UnitName": "个",
-                        "PosMenuId": 0,
-                        "PosMenuName": null,
-                        "PosMenuNumber": 0,
-                        "YedIsPackage": 0,
-                        "DishPrice": "0.00",
-                        "PosEatInPrice": "0.00",
-                        "PosTakeAwayPrice": "0.00",
-                        "DishSubList": null
-                    },
-                    {
-                        "DishMenuId": 0,
-                        "DishId": 143,
-                        "DishName": "口味",
-                        "DishSerial": "00992",
-                        "UnitId": 151,
-                        "UnitName": "麻辣",
-                        "PosMenuId": 0,
-                        "PosMenuName": null,
-                        "PosMenuNumber": 0,
-                        "YedIsPackage": 0,
-                        "DishPrice": "0.00",
-                        "PosEatInPrice": "0.00",
-                        "PosTakeAwayPrice": "0.00",
-                        "DishSubList": null
-                    },
-                    {
-                        "DishMenuId": 0,
-                        "DishId": 143,
-                        "DishName": "口味",
-                        "DishSerial": "00992",
-                        "UnitId": 150,
-                        "UnitName": "香辣",
-                        "PosMenuId": 0,
-                        "PosMenuName": null,
-                        "PosMenuNumber": 0,
-                        "YedIsPackage": 0,
-                        "DishPrice": "0.00",
-                        "PosEatInPrice": "0.00",
-                        "PosTakeAwayPrice": "0.00",
-                        "DishSubList": null
-                    },
-                    {
-                        "DishMenuId": 0,
-                        "DishId": 142,
-                        "DishName": "74456",
-                        "DishSerial": "jdddd",
-                        "UnitId": 143,
-                        "UnitName": "36",
-                        "PosMenuId": 0,
-                        "PosMenuName": null,
-                        "PosMenuNumber": 0,
-                        "YedIsPackage": 0,
-                        "DishPrice": "0.00",
-                        "PosEatInPrice": "0.00",
-                        "PosTakeAwayPrice": "0.00",
-                        "DishSubList": null
-                    },
-                    {
-                        "DishMenuId": 0,
-                        "DishId": 140,
-                        "DishName": "safds",
-                        "DishSerial": "jd111",
-                        "UnitId": 143,
-                        "UnitName": "36",
-                        "PosMenuId": 0,
-                        "PosMenuName": null,
-                        "PosMenuNumber": 0,
-                        "YedIsPackage": 0,
-                        "DishPrice": "0.00",
-                        "PosEatInPrice": "0.00",
-                        "PosTakeAwayPrice": "0.00",
-                        "DishSubList": null
-                    },
-                    {
-                        "DishMenuId": 0,
-                        "DishId": 136,
-                        "DishName": "关联菜品2",
-                        "DishSerial": "20124",
-                        "UnitId": 65,
-                        "UnitName": "224",
-                        "PosMenuId": 0,
-                        "PosMenuName": null,
-                        "PosMenuNumber": 0,
-                        "YedIsPackage": 0,
-                        "DishPrice": "0.00",
-                        "PosEatInPrice": "0.00",
-                        "PosTakeAwayPrice": "0.00",
-                        "DishSubList": null
-                    }
-                ],
-                "TotalCount": 72
-            };
             var result = $scope.result = {};
-            result.data = resultAjax.Data;
-
-            $scope.modal = {
-                title: '标题',
-                msg: 'Hello,这是一个由Bootstrap提供的模态框.'
+            var dataAjax = $scope.dataAjax = {
+                "PageIndex": 1,
+                "PageSize": 72,
             };
+            result.resultData = {};
+            result.resultAjax = {};
+            httpServer.post(
+                select.values[dis_id].url,
+                dataAjax,
+                function (results) {
+                    result.resultAjax = results;
+                    result.resultData = results.data;
+                }
+            );
+            var getIdDate = function (key, id, data) {
+                var i;
+                for (i = 0; i < data.length; i++) {
+                    if (id === data[i][key]) {
+                        return data[i]
+                    }
+                }
+            };
+            //映射
             var modal = $scope.modal = {
-                text: "<h1>12</h1>"
+                isOpenModal_show: false,
+                isOpenModal: false,
+                modalData: {},
+                modalDataAjax: {},
+                postGetPos: function () {
+                    var _this = this;
+                    httpServer.post(select.values[dis_id].getUrl, null, function (reault) {
+                        var data = reault.data
+                        // if(data.Error){
+                        _this.modalDataAjax = data.Data;
+                        // }
+                    })
+                },
+                tilte: "选择菜品",
+                body: '',
+                dataTypesOf: [
+                    {}
+                ],
+                open: function (e) {
+                    if (e != undefined) {
+                        this.isOpenModal_show = true;
+                        this.isOpenModal = true;
+                    }
+                },
+                stop: function () {
+                    if (this.isOpenModal_show) {
+                        this.isOpenModal_show = false;
+                        this.isOpenModal = false;
+                    }
+                },
+                stopEvent: function (e) {
+                    e.stopPropagation()
+                }
             };
+            $scope.modelsearchs = {};
+            $scope.$watch('modelsearchs', function (n) {
+                clearData(n);
+            }, true);
+            var modalRadio = $scope.modalRadio = {};
+            modalRadio.value = 2;
+            modalRadio.values = [
+                {
+                    code: 'a', name: "单品", url: $rootScope.httpIp + '/Dish/SingleList',
+                    getUrl: $rootScope.httpIp + "/Dish/GetPosDishList"
+                },
+                {
+                    code: 'b',
+                    name: "套餐",
+                    url: $rootScope.httpIp + '/Dish/PackageList',
+                    getUrl: $rootScope.httpIp + "/Dish/GetPosDishPackList"
+                }
+            ];
+            modalRadio.selection = modalRadio.values[dis_id];
+            var modalRadio2 = $scope.modalRadio2 = {};
+            modalRadio2.value = 2;
+            modalRadio2.values = [
+                {
+                    code: 'a', name: "单品", url: $rootScope.httpIp + '/Dish/SingleList',
+                    getUrl: $rootScope.httpIp + "/Dish/GetPosDishList"
+                },
+                {
+                    code: 'b',
+                    name: "套餐",
+                    url: $rootScope.httpIp + '/Dish/PackageList',
+                    getUrl: $rootScope.httpIp + "/Dish/GetPosDishPackList"
+                }
+            ];
+            modalRadio2.selection = modalRadio2.values[dis_id];
 
-            // $http
-            //     .get(select.values[$scope.index].url)
-            //     .then(
-            //         function (data) {
-            //
-            //         },
-            //         function (data) {
-            //
-            //         }
-            //     )
+            $scope.OpenModal = function (i, id) {
+                switch (i) {
+                    case 1:
+                        modal.modalData = getIdDate("DishUnitId", id, result.resultData.Data);
+                        modal.open(1);
+                        break;
+                    case 2:
+                        // modal.open(2);
+                        break;
+                    default:
+                        modal.modalData = getIdDate("DishUnitId", id, result.resultData.Data);
+                        modal.postGetPos();
+                        modal.open(0);
+                }
+            };
 
         }])
 })(angular);
